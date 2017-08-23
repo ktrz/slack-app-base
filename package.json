@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "start": "nf start"
+  },
+  "index": "index.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "foreman": "^2.0.0",
+    "mz": "^2.6.0",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

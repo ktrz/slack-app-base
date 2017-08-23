@@ -1,12 +1,16 @@
-'use strict';
-const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+'use strict'
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 const server = app.listen(process.env.PORT || 3000, () => {
-  console.log('Express server   listening on port %d in %s mode', server.address().port, app.settings.env);
-});
+  console.log(
+    'Express server   listening on port %d in %s mode',
+    server.address().port,
+    app.settings.env
+  )
+})
 
 const store = require('./store')()
 const slackApi = require('./slackApi')(store, {
@@ -15,33 +19,25 @@ const slackApi = require('./slackApi')(store, {
 })
 
 app.post('/exampleCommand', (req, res) => {
-  const text = req.body.text;
-  const params = text.split(' ')
-
-  let data = {
-    text: `You've sent exampleCommand with params`,
+  const text = req.body.text
+  const params = text.split(' ').filter(p => p !== '')
+  const data = {
+    text: `You've sent exampleCommand with ${params.length ? '' : 'no'} params`,
     attachments: params.map(p => ({ text: p }))
-  };
-  res.json(data);
-});
+  }
+  res.json(data)
+})
 
 app.post('/event', (req, res) => {
   const body = req.body
-  console.log(body, typeof body)
   switch (body.type) {
     case 'url_verification':
       res.send(body.challenge)
       return
     case 'event_callback':
       if (body.event.type === 'message' && body.event.user) {
-        const data = {
-          attachments: [{
-            image_url: 'https://http.cat/302.jpg',
-            text: '302: Found',
-          }]
-        };
         slackApi.postMessage(body.team_id, body.event.channel, 'test message')
-        res.json(data)
+        res.status(200).end()
       }
       return
     default:

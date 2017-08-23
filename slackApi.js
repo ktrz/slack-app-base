@@ -12,7 +12,7 @@ module.exports = (store, { appId, appSecret }) => {
           .then(() => getTeamInfo(body.team_id)
             .then(({ body, statusCode }) => {
               if (statusCode == 200) {
-                return JSON.parse(body).team.domain;
+                return JSON.parse(body).team.domain
               }
             })
           ),
@@ -21,7 +21,7 @@ module.exports = (store, { appId, appSecret }) => {
   }
 
   function getTeamInfo(teamId) {
-    const request = require('request-promise-native');
+    const request = require('request-promise-native')
     const data = store.read()
     const token = data[teamId][0].access_token
     return request.post(

@@ -21,7 +21,7 @@ module.exports = (fileName='store.json') => {
   }
 
   function addInstallation(installation) {
-    const teamId = installation.team_id;
+    const teamId = installation.team_id
     currentData[teamId] = currentData[teamId] || []
     currentData[teamId].push(installation)
     return write(currentData).then(read)

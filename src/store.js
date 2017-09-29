@@ -1,4 +1,4 @@
-module.exports = (fileName='store.json') => {
+export default (fileName='../store.json') => {
   const fs = require('mz/fs')
 
   if (!fs.existsSync(fileName)) {

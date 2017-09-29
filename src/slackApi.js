@@ -1,4 +1,6 @@
-module.exports = (store, { appId, appSecret }) => {
+import request from 'request-promise-native'
+
+export default (store, { appId, appSecret }) => {
   return {
     install,
     postMessage
@@ -21,7 +23,6 @@ module.exports = (store, { appId, appSecret }) => {
   }
 
   function getTeamInfo(teamId) {
-    const request = require('request-promise-native')
     const data = store.read()
     const token = data[teamId][0].access_token
     return request.post(
@@ -34,7 +35,6 @@ module.exports = (store, { appId, appSecret }) => {
   }
 
   function getOathAccess(code) {
-    const request = require('request-promise-native')
     return request.post(
       'https://slack.com/api/oauth.access',
       {
@@ -49,7 +49,6 @@ module.exports = (store, { appId, appSecret }) => {
   }
 
   function postMessage(team, channel, text) {
-    const request = require('request-promise-native')
     const token = store.read()[team][0].access_token
     request.post('https://slack.com/api/chat.postMessage',
       {

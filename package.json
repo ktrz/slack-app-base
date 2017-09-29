@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "start": "nf start"
+    "start": "nf start",
+    "build": "babel src -d dist",
+    "test": "mocha **/*test.js --compilers js:babel-register"
   },
   "index": "index.js",
   "dependencies": {
@@ -12,6 +14,11 @@
     "request-promise-native": "^1.0.4"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "mocha": "^3.5.3",
     "nodemon": "^1.11.0"
   }
 }

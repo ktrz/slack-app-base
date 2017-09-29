@@ -1,6 +1,8 @@
 'use strict'
-const express = require('express')
-const bodyParser = require('body-parser')
+import express from 'express'
+import bodyParser from 'body-parser'
+import slackApiFactory from './slackApi'
+import storeFactory from './store'
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -12,8 +14,10 @@ const server = app.listen(process.env.PORT || 3000, () => {
   )
 })
 
-const store = require('./store')()
-const slackApi = require('./slackApi')(store, {
+
+
+const store = storeFactory()
+const slackApi = slackApiFactory(store, {
   appId: process.env.SLACK_APP_ID,
   appSecret: process.env.SLACK_APP_SECRET
 })
